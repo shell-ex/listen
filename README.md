@@ -8,7 +8,7 @@ Do you want to listen tcp or udp on shell(bsh, bash, zsh, fish, etc)? Maybe this
 Status
 ------
 
-Still in developing, ruby version support tcp now, c version not works.
+Still in developing, ruby version support tcp & udp now, c version not works.
 
 Build and install
 -----------------
@@ -19,7 +19,10 @@ Build and install
 Usage
 -----
 
-    $ listen [-t [addr:]port] [-u [addr:]port] command
+    listen [-t [addr:]port] [-u [addr:]port] command
+        -t   listen to tcp
+        -u   listen to udp
+        You can listen multi port(both tcp & udp) at once
 
 Once a tcp linked in, command will be executed, and all steam will pass to stdin, all stdout will send back to client.
 
