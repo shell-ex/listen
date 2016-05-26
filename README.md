@@ -5,6 +5,11 @@ Listen tcp or udp on shell.
 
 Do you want to listen tcp or udp on shell(bsh, bash, zsh, fish, etc)? Maybe this is what you want!
 
+Status
+------
+
+Still in developing, ruby version support tcp now, c version not works.
+
 Build and install
 -----------------
 
@@ -14,7 +19,7 @@ Build and install
 Usage
 -----
 
-    $ listen [-t [addr]:port] [-u [addr]:port] command
+    $ listen [-t [addr:]port] [-u [addr:]port] command
 
 Once a tcp linked in, command will be executed, and all steam will pass to stdin, all stdout will send back to client.
 
@@ -22,12 +27,13 @@ Once an udp received, command will be executed, and all data will pass to std, a
 
 For example:
 
-    $ listen -t 1234 tac
+    $ listen -t 1234 sed -u 's/[aeiou]//g'
 
     # in another terminal
     $ telnet 127.0.0.1 1234
     hello world!
-    !dlrow olleh
-    ^D
+    hll wrld!
 
+**NOTICE**
 
+Some shell commands have buffering, If you use commands in this way, have a look here: https://www.perkin.org.uk/posts/how-to-fix-stdio-buffering.html
