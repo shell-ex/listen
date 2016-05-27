@@ -5,6 +5,7 @@ require 'shellwords'
 
 $fds_read = []
 $cmd = nil
+$shell = nil
 
 ConnectionPair = Struct.new :socket, :process, 
                             :udp_from, :udp_data, :udp_fd
@@ -21,9 +22,17 @@ def listen_udp addr, port
   $fds_read.push fd
 end
 
+def launch_program
+  if $shell
+    return IO.popen([$shell, "-c", $cmd], 'r+')
+  else
+    return IO.popen($cmd, 'r+')
+  end
+end
+
 def on_data s, data
   if ! $conn_map[s]
-    p = IO.popen(["sh", "-c", $cmd], 'r+')
+    p = launch_program
     c = ConnectionPair.new s, p
     $conn_map[s] = c
     $conn_map[p] = c
@@ -39,7 +48,7 @@ def on_data s, data
 end
 
 def on_udp data, from, local_fd
-  p = IO.popen(["sh", "-c", $cmd], 'r+')
+  p = launch_program
   c = ConnectionPair.new nil, p, from, "", local_fd
   p.write data
   p.close_write
@@ -124,6 +133,8 @@ def parse_args
         end
         listen_udp addr, port
         listened = true
+      when 's'
+        $shell = args.shift
       else
         raise "Unknown argument #{arg}"
       end

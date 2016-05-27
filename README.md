@@ -8,7 +8,11 @@ Do you want to listen tcp or udp on shell(bsh, bash, zsh, fish, etc)? Maybe this
 Status
 ------
 
-Still in developing, ruby version support tcp & udp now, c version not works.
+C version: not work
+
+ruby version: tcp: ok, udp: ok, shell wrap: ok
+
+unit test: basic
 
 Build and install
 -----------------
